@@ -33,7 +33,7 @@ export async function signOut(req: Request, res: Response) {
 
     try {
         await authRepository.deleteSession(token);
-        return res.sendStatus(201);
+        return res.sendStatus(200);
 
     } catch (error) {
         console.log(error);

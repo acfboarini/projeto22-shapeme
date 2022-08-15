@@ -2,19 +2,23 @@ import { Session, User } from "@prisma/client";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
 import authRepository from "../repositories/authRepository.js";
+import dayjs from "dayjs";
 
 export type CreateUserData = Omit<User, "id">;
 export type CreateSessionData = Omit<Session, "id">;
 
-async function createUser(createUserData: Partial<CreateUserData>) {
+async function createUser(createUserData: CreateUserData) {
 
-    const {username, email, password, image, currentWeight, height, basalRate} = createUserData;
+    let { username, email, password, birthDate, image, currentWeight, height, basalRate } = createUserData;
     const passwordHash = bcrypt.hashSync(password, 10);
+    
+    birthDate = dayjs(birthDate).format('YYYY-MM-DDTHH:mm:ss');
 
     const userData = {
         username,
         email,
         password: passwordHash,
+        birthDate,
         image,
         currentWeight,
         height,
@@ -28,12 +32,11 @@ async function login(user: User) {
     const token = uuid();
 
     const sessionData = {
-        username: user.username,
         userId: user.id,
         token
     } 
     await authRepository.insertSession(sessionData);
-    return sessionData;
+    return { username: user.username, ...sessionData };
 }
 
 const authService = {

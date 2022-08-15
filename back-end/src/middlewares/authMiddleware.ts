@@ -6,8 +6,9 @@ import bcrypt from "bcrypt";
 export function validateSignUpSchema(req: Request, res: Response, next: NextFunction) {
 
     const validation = signUpSchema.validate(req.body);
+    console.log(validation);
     if (validation.error) {
-        return res.status(404).send({error: validation.error.message});
+        return res.status(400).send({error: validation.error.message});
     }
 
     next();
@@ -17,7 +18,7 @@ export function validateSignInSchema(req: Request, res: Response, next: NextFunc
 
     const validation = signInSchema.validate(req.body);
     if (validation.error) {
-        return res.status(404).send({error: validation.error.message});
+        return res.status(400).send({error: validation.error.message});
     }
 
     next();
@@ -25,10 +26,12 @@ export function validateSignInSchema(req: Request, res: Response, next: NextFunc
 
 export async function validateSignUpData(req: Request, res: Response, next: NextFunction) {
 
-    const { email } = req.body;
+    const { username, email } = req.body;
 
-    const user = await userRepository.getUserByEmail(email);
-    if (user) return res.sendStatus(409);
+    const userByUsername = await userRepository.getUserByUsername(username);
+    const userByEmail = await userRepository.getUserByEmail(email);
+
+    if (userByEmail || userByUsername) return res.sendStatus(409);
 
     next();
 }
@@ -51,7 +54,7 @@ export async function validateSignInData(req: Request, res: Response, next: Next
 
 export async function authorization(req: Request, res: Response, next: NextFunction) {
 
-    const {authorization} = req.headers;
+    const { authorization } = req.headers;
     const token = authorization?.replace("Bearer", "").trim();
     if (!token) return res.sendStatus(403);
 

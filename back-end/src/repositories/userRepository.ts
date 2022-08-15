@@ -8,6 +8,14 @@ async function getUserByEmail(email: string) {
     })
 }
 
+async function getUserByUsername(username: string) {
+    return await prisma.user.findUnique({
+        where: {
+            username
+        }
+    })
+}
+
 async function getUserByToken(token: string) {
     return await prisma.session.findUnique({
         where: {
@@ -19,8 +27,15 @@ async function getUserByToken(token: string) {
     })
 }
 
+async function updateUser(id: number, newData: any) {
+    return await prisma.user.update({
+        where: {id},
+        data: newData
+    })
+}
+
 const userRepository = {
-    getUserByEmail, getUserByToken 
+    getUserByEmail, getUserByUsername, getUserByToken, updateUser
 }
 
 export default userRepository;
