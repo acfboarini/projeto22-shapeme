@@ -4,6 +4,7 @@ import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Meal from "./Meal";
 
 export default function TelaToday() {
     const userJSON = window.localStorage.getItem("user");
@@ -17,16 +18,16 @@ export default function TelaToday() {
         headers: {Authorization: `Bearer ${token}`}
     }
 
-    /*if (reload) {
-        api.get("goals", config)
+    if (reload) {
+        api.get("meals", config)
        .then(response => {
-           setReload(false);
-           setGoals(response.data);
+            setReload(false);
+            setMeals(response.data);
        })
        .catch(err => {
-           console.log("Erro ao buscar metas");
+            console.log("Erro ao buscar refeições");
        });
-   }*/
+   }
 
     return (
         <>
@@ -38,14 +39,14 @@ export default function TelaToday() {
                         <Button onclick={() => {navigate("/create-meal")}}>+</Button>
                     </article>
 
-                    <article>
-                        {meals.length === 0?
+                    <ul>
+                        {meals.lenght === 0?
                             <p>Voce não tem nenhuma refeição adicionada</p>:
                             meals.map(meal => {
-                                return <></>
+                                return <Meal key={meal.id} meal={meal}/>
                             })
                         }
-                    </article>
+                    </ul>
                 </section>
             </Main>
             <Footer/>

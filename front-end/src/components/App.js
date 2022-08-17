@@ -9,6 +9,7 @@ import TelaHome from "./telaHome/TelaHome";
 import TelaToday from "./telaToday/TelaToday";
 import CreateFood from "./createFood/CreateFood";
 import CreateGoal from "./createGoal/CreateGoal";
+import CreateMeal from "./createMeal/CreateMeal";
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/foods" element={<TelaFoods/>}></Route>
                 <Route path="/create-food" element={<CreateFood/>}></Route>
                 <Route path="/today" element={<TelaToday/>}></Route>
+                <Route path="/create-meal" element={<CreateMeal/>}></Route>
             </Routes>
         </BrowserRouter>
     )

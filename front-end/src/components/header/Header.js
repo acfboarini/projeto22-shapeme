@@ -31,6 +31,7 @@ export default function Header() {
 }
 
 const Navbar = styled.header`
+    z-index: 2;
     height: 50px;
     display: flex;
     align-items: center;
@@ -54,7 +55,7 @@ const H2 = styled.h2`
 const Button = styled.button`
     border: none;
     font-size: 30px;
-    background-color: #52B6FF;
+    background-color: rgb(82, 182, 255);
     display: flex;
     align-items: center;
     justify-content: center;

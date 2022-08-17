@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import api from "../../api";
-import Goal from "../goal/Goal";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
@@ -96,7 +95,7 @@ export default function TelaHome() {
                         {goals.length === 0?
                             <p>Voce não tem nenhuma meta registrada</p>:
                             goals.map(goal => {
-                                return <Goal/>
+                                return <></>
                             })
                         }
                     </article>

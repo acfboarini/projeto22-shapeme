@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "prisma:deploy": "npx prisma migrate deploy",
-    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:migrate": "npx prisma generate && npx prisma migrate dev",
     "start": "node dist/src/server.js",
     "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\"",
     "test:integration": "dotenv -e .env.test npm run prisma:migrate && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i"

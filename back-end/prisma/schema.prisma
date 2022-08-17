@@ -21,6 +21,8 @@ model User {
   height          Int?
   basalRate       Int?
   sessions        Session[]
+  mealFood        MealFood[]
+  meal            Meal[]
 
   @@map("users")
 }
@@ -28,7 +30,7 @@ model User {
 model Session {
   id      Int     @id @default(autoincrement())
   user    User    @relation(fields: [userId], references: [id])
-  userId  Int     @unique
+  userId  Int
   token   String  @unique
   
   @@map("sessions")
@@ -41,6 +43,31 @@ model Food {
   carboPorcentage     Int
   proteinPorcentage   Int
   fatPorcentage       Int
+  mealFood            MealFood[]
   
   @@map("foods")
+}
+
+model Meal {
+  id                  Int         @id @default(autoincrement())
+  name                String  
+  mealFood            MealFood[]
+  user                User        @relation(fields: [userId], references: [id])
+  userId              Int    
+
+  @@map("meals")
+  @@unique([name, userId])
+}
+
+model MealFood {
+  id                  Int     @id @default(autoincrement())
+  user                User    @relation(fields: [userId], references: [id])
+  userId              Int
+  meal                Meal    @relation(fields: [mealId], references: [id])
+  mealId              Int
+  food                Food    @relation(fields: [foodId], references: [id])
+  foodId              Int
+  amount              Int
+
+  @@map("mealFoods")
 }

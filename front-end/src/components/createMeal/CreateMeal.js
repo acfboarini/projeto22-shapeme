@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../../api";
 
-export default function CreateFood() {
+export default function CreateMeal() {
 
     const userJSON = window.localStorage.getItem("user");
     const { token } = JSON.parse(userJSON);
@@ -12,24 +12,16 @@ export default function CreateFood() {
     const navigate = useNavigate();
     
     const [name, setName] = useState("");
-    const [portion, setPortion] = useState("");
-    const [kcal, setKcal] = useState("");
-    const [carbo, setCarbo] = useState("");
-    const [protein, setProtein] = useState("");
-    const [fat, setFat] = useState("");
+    const [food, setFood] = useState("");
+    const [amount, setAmount] = useState("");
 
     const config = {
         headers: {Authorization: `Bearer ${token}`}
     }
 
     function registrar() {
-        api.post("/foods", {
+        api.post("/today", {
             name,
-            portion,
-            kcal,
-            carbo,
-            protein,
-            fat
         }, config)
         .then(response => {
             alert("Alimento registrado com sucesso");
@@ -52,36 +44,15 @@ export default function CreateFood() {
                 <Article>
                     <h1>Porção(g): </h1>
                     <Input type="number" placeholder=""
-                        value={portion}
-                        onChange={e => setPortion(e.target.value)}
+                        value={food}
+                        onChange={e => setFood(e.target.value)}
                     />
                 </Article>
                 <Article>
                     <h1>Calorias(kcal): </h1>
                     <Input type="number" placeholder=""
-                        value={kcal}
-                        onChange={e => setKcal(e.target.value)}
-                    />
-                </Article>
-                <Article>
-                    <h1>Carboidratos(g): </h1>
-                    <Input type="number" placeholder=""
-                        value={carbo}
-                        onChange={e => setCarbo(e.target.value)}
-                    />
-                </Article>
-                <Article>
-                    <h1>Proteinas(g): </h1>
-                    <Input type="number" placeholder=""
-                        value={protein}
-                        onChange={e => setProtein(e.target.value)}
-                    />
-                </Article>
-                <Article>
-                <h1>Gorduras(g): </h1>
-                    <Input type="number" placeholder=""
-                        value={fat}
-                        onChange={e => setFat(e.target.value)}
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
                     />
                 </Article>
                 <button onClick={registrar}>

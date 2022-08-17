@@ -3,15 +3,14 @@ import api from "../../api";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import Food from "../food/Food";
+import { useNavigate } from "react-router-dom";
+import Food from "./Food";
 
 export default function TelaFoods() {
     const userJSON = window.localStorage.getItem("user");
     const { token } = JSON.parse(userJSON);
 
     const navigate = useNavigate();
-
     const [foods, setFoods]= useState([]);
     const [reload, setReload] = useState(true);
 
@@ -19,16 +18,16 @@ export default function TelaFoods() {
         headers: {Authorization: `Bearer ${token}`}
     }
 
-    /*if (reload) {
-        api.get("goals", config)
+    if (reload) {
+        api.get("foods", config)
        .then(response => {
-           setReload(false);
-           setGoals(response.data);
+            setReload(false);
+            setFoods(response.data);
        })
        .catch(err => {
-           console.log("Erro ao buscar metas");
+            console.log("Erro ao buscar alimentos");
        });
-   }*/
+   }
 
     return (
         <>
@@ -40,14 +39,18 @@ export default function TelaFoods() {
                         <button onClick={() => navigate("/create-food")}>+</button>
                     </article>
 
-                    <article>
+                    <ul>
                         {foods.length === 0?
                             <p>Voce não tem nenhum alimento registrado</p>:
                             foods.map(food => {
-                                return <Food/>
+                                return <Food key={food.id} 
+                                    food={food} 
+                                    config={config}
+                                    setReload={setReload}
+                                />
                             })
                         }
-                    </article>
+                    </ul>
                 </section>
             </Main>
             <Footer/>

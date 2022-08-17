@@ -7,8 +7,24 @@ async function insertFood(foodData: FoodData) {
     })
 }
 
+async function getAll() {
+    return await prisma.food.findMany({})
+}
+
+async function findByName(name: string) {
+    return await prisma.food.findFirst({
+        where: {name}
+    })
+}
+
+async function deleteFoodById(id: number) {
+    return await prisma.food.delete({
+        where: {id}
+    })
+}
+
 export const foodRepository = {
-    insertFood, 
+    insertFood, getAll, deleteFoodById, findByName
 }
 
 export default foodRepository;

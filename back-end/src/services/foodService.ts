@@ -10,13 +10,13 @@ interface CreateFoodData {
     fat: number
 }
 
-export type FoodData = Omit <Food, "id">
+export type FoodData = Omit<Food, "id">
 
 async function createFood(data: CreateFoodData) {
     const { name, portion, kcal, carbo, protein, fat } = data;
 
     const foodData = {
-        name,
+        name: name.toLowerCase(),
         caloriesPerServing: calculateCaloriesPerServing(portion, kcal),
         carboPorcentage: calculateCarboPorcentage(portion, carbo),
         proteinPorcentage: calculateProteinPorcentage(portion, protein),
@@ -45,7 +45,6 @@ function calculateFatPorcentage(portion: number, fat: number) {
     const fatPorcentage = (fat/portion*100).toFixed(0);
     return parseInt(fatPorcentage);
 }
-
 
 const foodService = {
     createFood, 
