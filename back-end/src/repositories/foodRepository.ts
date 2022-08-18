@@ -12,7 +12,7 @@ async function getAll() {
 }
 
 async function findByName(name: string) {
-    return await prisma.food.findFirst({
+    return await prisma.food.findUnique({
         where: {name}
     })
 }

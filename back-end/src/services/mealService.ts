@@ -1,11 +1,21 @@
+import mealFoodRepository from "../repositories/mealFoodRepository.js";
 import mealRepository from "../repositories/mealRepository.js";
 import mealFoodService from "./mealFoodService.js";
+
+export interface Portion {
+    name: String,
+    amount: Number
+}
+
+export interface MealData {
+    name: String, 
+    portions: Portion[]
+}
 
 async function createMeal(name: string, userId: number, portions: any) {
     await mealRepository.insert(name, userId);
     const meal = await mealRepository.getByNameAndUserId(name, userId);
-    const result = await mealFoodService.createManyMealFood(portions, userId, meal.id);
-
+    return await mealFoodService.createManyMealFood(portions, userId, meal.id);
 }
 
 async function getMeals(userId: number) {
@@ -27,6 +37,8 @@ function calculateTotalCalories(meals: any) {
         totalCalories += mealCalories;
     })
 
+    totalCalories = Number((totalCalories/1000).toFixed(2));
+
     return totalCalories;
 }
 
@@ -43,8 +55,14 @@ function calculateCaloriesPerMeal(meal: any) {
     return totalCalories;
 }
 
+async function deleteMeal(mealId: number) {
+    await mealFoodRepository.deleteManyMealFoods(mealId);
+    await mealRepository.deleteMealById(mealId);
+    return;
+}
+
 const mealService = {
-    createMeal, getMeals, getTotalCalories
+    createMeal, getMeals, getTotalCalories, deleteMeal
 }
 
 export default mealService;

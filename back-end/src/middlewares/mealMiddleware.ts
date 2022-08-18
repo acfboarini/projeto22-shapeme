@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import foodRepository from "../repositories/foodRepository.js";
 import mealRepository from "../repositories/mealRepository.js";
-import { mealSchema } from "../schemas/mealSchema.js";
 
 export function validateMealSchema(req: Request, res: Response, next: NextFunction) {
 
-    const validation = mealSchema.validate(req.body);
-    console.log(validation);
-    if (validation.error) {
-        return res.status(400).send({error: validation.error.message});
+    const { name, portions } = req.body;
+    if (!name) {
+        return res.status(400).send({error: "insira um nome para sua refeição"});
     }
 
     next();
@@ -32,12 +30,12 @@ export async function validateExistFoods(req: Request, res: Response, next: Next
     const listPortions = [];
 
     for (const portion of portions) {
-        const food = await foodRepository.findByName(portion.name);
-        if(!food) return res.status(404).send(`O alimento: ${portion.name} não esta registrado`);
+        const food = await foodRepository.findByName(portion.foodName);
+        if(!food) return res.status(404).send(`O alimento: ${portion.foodName} não esta registrado`);
 
         listPortions.push({
             foodId: food.id,
-            amount: portion.amount
+            amount: Number(portion.amount)
         })
     }
 

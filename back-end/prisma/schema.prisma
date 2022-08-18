@@ -16,7 +16,6 @@ model User {
   email           String        @unique
   password        String
   birthDate       String
-  image           String?
   currentWeight   Int?
   height          Int?
   basalRate       Int?

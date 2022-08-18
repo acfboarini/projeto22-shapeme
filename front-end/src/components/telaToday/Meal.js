@@ -1,21 +1,36 @@
+import { IoTrashSharp } from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
 import styled from "styled-components";
+import api from "../../api";
 
-export default function Meal({meal}) {
+export default function Meal({meal, setReload, config}) {
 
     const { id, name, mealFood: portions } = meal;
+
+
+    function deleteMeal(mealdId) {
+        api.delete(`/meals/${mealdId}`, config)
+        .then(response => {
+            alert("Refeição deletada com sucesso");
+            setReload(true);
+        })
+        .catch(err => console.log(err));
+    }
 
     return (
         <Li>
             <H1>{name}</H1>
             <ul>
-                {portions.map(portion => {
+                {portions.map((portion, index) => {
                     const { amount, food } = portion;
                     const { name } = food;
                     return (
-                        <Li>porção: {amount}g de {name}</Li>
+                        <Li key={index}>porção: {amount}g de {name}</Li>
                     )
                 })}
             </ul>
+            <Button type={"delete"} onClick={() => deleteMeal(id)}><IoTrashSharp/></Button>
+            <Button type={"edit"}><MdEdit/></Button>
         </Li>
     )
 }

@@ -43,3 +43,17 @@ export async function getTotalCalories(req: Request, res: Response) {
         return res.sendStatus(500);
     }
 }
+
+export async function deleteMeal(req: Request, res: Response) {
+
+    const { mealId } = req.params;
+
+    try {
+        await mealService.deleteMeal(Number(mealId));
+        return res.status(200).send("Refeição deletada com sucesso");
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+}

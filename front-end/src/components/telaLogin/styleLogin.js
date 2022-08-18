@@ -1,4 +1,8 @@
-main.auth {
+import styled from "styled-components";
+
+export const Main = styled.main`
+    margin: 0;
+    height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -6,16 +10,16 @@ main.auth {
     padding: 20px;
     margin-top: 80px;
     margin-bottom: 70px;
-}
+`;
 
-.registros {
+export const Section = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-}
+`;
 
-.registros input {
+export const Input = styled.input`
     width: 303px;
     height: 45px;
     background: #FFFFFF;
@@ -24,14 +28,14 @@ main.auth {
     border-radius: 5px;
     margin: 4px;
     font-size: 20px;
-}
 
-.registros input::placeholder {
-    font-size: 20px;
-    color: #DBDBDB;
-}
+    ::placeholder {
+        font-size: 20px;
+        color: #DBDBDB;
+    }
+`;
 
-.registros button {
+export const Button = styled.button`
     width: 303px;
     height: 45px;
     background: #52B6FF;
@@ -39,11 +43,11 @@ main.auth {
     border: none;
     margin-top: 4px;
     margin-bottom: 25px;
-}
 
-.registros button span {
-    font-size: 21px;
-    text-align: center; 
-    color: #FFFFFF;
-    font-style: normal;
-}
+    span {
+        font-size: 21px;
+        text-align: center; 
+        color: #FFFFFF;
+        font-style: normal;
+    }
+`;

@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import api from "../../api";
-import styled from "styled-components";
-
 import Logo from "./../logo/Logo";
-
-import "./login.css";
+import { Button, Input, Main, Section } from "./styleLogin";
 
 export default function TelaLogin() {
 
@@ -35,29 +32,24 @@ export default function TelaLogin() {
     }
 
     return (
-        <Main className="auth">
+        <Main>
             <Logo/>
-            <section className="registros">
-                <input type="text" placeholder="email"
+            <Section>
+                <Input type="text" placeholder="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <input type="password" placeholder="senha"
+                <Input type="password" placeholder="senha"
                     value={senha}
                     onChange={e => setSenha(e.target.value)}
                 />
-                <button onClick={login}>
+                <Button onClick={login}>
                     <span>Entrar</span>
-                </button>
+                </Button>
                 <Link to="/sign-up" style={{textDecoration: 'none'}}>
                     <p>Não tem uma conta? Cadastre-se!</p>
                 </Link>
-            </section>
+            </Section>
         </Main>
     );
 }
-
-const Main = styled.main`
-    margin: 0;
-    height: 100vh;
-`;

@@ -1,8 +1,10 @@
 import Header from "../header/Header";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../../api";
+import AddFood from "./AddFood";
+import { Main } from "../telaHome/styleHome";
+import { Input, Li, Section, Ul } from "./styleCreateMeal";
 
 export default function CreateMeal() {
 
@@ -12,88 +14,77 @@ export default function CreateMeal() {
     const navigate = useNavigate();
     
     const [name, setName] = useState("");
-    const [food, setFood] = useState("");
-    const [amount, setAmount] = useState("");
+    const [portions, setPortions] = useState([]);
+    const [addFood, setAddFood] = useState(false);
+    const [foods, setFoods] = useState([]);
+    const [reload, setReload] = useState(true);
 
     const config = {
         headers: {Authorization: `Bearer ${token}`}
     }
 
+    if (reload) {
+        api.get("/foods", config)
+        .then(response => {
+            setReload(false);
+            setFoods(response.data);
+        })
+        .catch(err => console.log(err));
+    }
+
     function registrar() {
-        api.post("/today", {
+        api.post("/meals", {
             name,
+            portions
         }, config)
         .then(response => {
-            alert("Alimento registrado com sucesso");
-            navigate("/foods");
+            alert("Refeição registrada com sucesso");
+            navigate("/today");
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
 
     return (
         <>
             <Header/>
             <Main>
-                <Article>
-                    <h1>Nome: </h1>
+                <Section>
+                    <h1>Nome da refeição: </h1>
                     <Input type="text" placeholder=""
                         value={name}
                         onChange={e => setName(e.target.value)}
                     />
-                </Article>
-                <Article>
-                    <h1>Porção(g): </h1>
-                    <Input type="number" placeholder=""
-                        value={food}
-                        onChange={e => setFood(e.target.value)}
-                    />
-                </Article>
-                <Article>
-                    <h1>Calorias(kcal): </h1>
-                    <Input type="number" placeholder=""
-                        value={amount}
-                        onChange={e => setAmount(e.target.value)}
-                    />
-                </Article>
-                <button onClick={registrar}>
-                    <span>Registrar</span>
-                </button>
-                <Link to="/foods" style={{textDecoration: 'none'}}>
-                    <p>Cancelar</p>
-                </Link>    
+                </Section>
+                <Section sectionAdd={true}>
+                    <h1>Porções: </h1>
+                    <button onClick={() => {setAddFood(true)}}>+</button>
+                </Section>
+
+                {addFood? 
+                    <AddFood 
+                        setAddFood={setAddFood}
+                        portions={portions}
+                        setPortions={setPortions}
+                        foods={foods}
+                    />:
+                    <></>
+                }
+
+                <Ul>
+                    {
+                        portions.map((portion, index) => {
+                            return <Li key={index}>
+                                <p>{portion.amount}g de {portion.foodName}</p>
+                            </Li>
+                        })
+                    }
+                </Ul>
+
+                <Section buttonSection={true}>
+                    <button onClick={registrar}>Registrar</button>
+                    <button onClick={() => {navigate("/today")}}>Cancelar</button>   
+                </Section> 
             </Main>
         </>
     )
 }
-
-const Main = styled.main`
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 100%;
-    padding: 15px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;  
-`
-
-const Input = styled.input`
-    width: 303px;
-    height: 45px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 20px;
-
-    ::placeholder {
-        font-size: 20px;
-        color: #DBDBDB;
-    }
-`;
-
-const Article = styled.article`
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-`

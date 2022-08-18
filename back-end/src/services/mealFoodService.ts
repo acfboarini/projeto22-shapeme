@@ -3,7 +3,6 @@ import mealFoodRepository from "../repositories/mealFoodRepository.js";
 
 export type CreateMealFoodData = Omit<MealFood, "id">
 
-
 async function createManyMealFood(portions: any, userId: number, mealId: number) {
 
     for (const portion of portions) {
@@ -18,7 +17,7 @@ async function createManyMealFood(portions: any, userId: number, mealId: number)
 }
 
 const mealFoodService = {
-    createManyMealFood, 
+    createManyMealFood,
 }
 
 export default mealFoodService;

@@ -12,13 +12,19 @@ async function getByUserId(userId: number) {
 }
 
 async function insert(mealFoodData: CreateMealFoodData) {
-    await prisma.mealFood.create({
+    return await prisma.mealFood.create({
         data: mealFoodData
     })
 }
 
+async function deleteManyMealFoods(mealId: number) {
+    return await prisma.mealFood.deleteMany({
+        where: {mealId}
+    })
+}
+
 const mealFoodRepository = {
-    getAll, insert, getByUserId
+    getAll, insert, getByUserId, deleteManyMealFoods
 }
 
 export default mealFoodRepository;

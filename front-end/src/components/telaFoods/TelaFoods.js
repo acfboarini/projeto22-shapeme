@@ -2,9 +2,11 @@ import { useState } from "react";
 import api from "../../api";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Food from "./Food";
+import { Main } from "../telaHome/styleHome";
+import { Section } from "./styleTelaFoods";
+import { Button } from "../telaToday/styleTelaToday";
 
 export default function TelaFoods() {
     const userJSON = window.localStorage.getItem("user");
@@ -33,38 +35,25 @@ export default function TelaFoods() {
         <>
             <Header/>
             <Main>
-                <section>
-                    <article className="title">
-                        <h1>Alimentos: </h1>
-                        <button onClick={() => navigate("/create-food")}>+</button>
-                    </article>
+                <Section buttonAdd={true}>
+                    <h1>Alimentos: </h1>
+                    <Button onClick={() => navigate("/create-food")}>+</Button>
+                </Section>
 
-                    <ul>
-                        {foods.length === 0?
-                            <p>Voce não tem nenhum alimento registrado</p>:
-                            foods.map(food => {
-                                return <Food key={food.id} 
-                                    food={food} 
-                                    config={config}
-                                    setReload={setReload}
-                                />
-                            })
-                        }
-                    </ul>
-                </section>
+                <ul>
+                    {foods.length === 0?
+                        <p>Voce não tem nenhum alimento registrado</p>:
+                        foods.map(food => {
+                            return <Food key={food.id} 
+                                food={food} 
+                                config={config}
+                                setReload={setReload}
+                            />
+                        })
+                    }
+                </ul>
             </Main>
             <Footer/>
         </>
     )
 }
-
-const Main = styled.main`
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 100%;
-    padding: 15px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;  
-`

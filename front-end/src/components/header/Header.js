@@ -24,7 +24,7 @@ export default function Header() {
 
     return (
         <Navbar>
-            <H2>Shapeme</H2>           
+            <H1>Shapeme</H1>           
             <Button onClick={logout}><IoLogOutOutline/></Button>
         </Navbar>
     )
@@ -46,9 +46,6 @@ const Navbar = styled.header`
 `;
 
 const H1 = styled.h1`
-`;
-
-const H2 = styled.h2`
     font-family: 'Orbitron', sans-serif;
 `;
 

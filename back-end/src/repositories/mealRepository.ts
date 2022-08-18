@@ -37,8 +37,14 @@ async function getByNameAndUserId(name: string, userId: number) {
     })
 }
 
+async function deleteMealById(id: number) {
+    return await prisma.meal.delete({
+        where: {id}
+    })
+}
+
 const mealRepository = {
-    getAllFromUser, insert, getByNameAndUserId 
+    getAllFromUser, insert, getByNameAndUserId, deleteMealById
 }
 
 export default mealRepository;

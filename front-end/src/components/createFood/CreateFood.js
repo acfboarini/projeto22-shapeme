@@ -1,8 +1,8 @@
 import Header from "../header/Header";
-import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../../api";
+import { Article, Input, Main } from "./styleCreateFood";
 
 export default function CreateFood() {
 
@@ -94,35 +94,3 @@ export default function CreateFood() {
         </>
     )
 }
-
-const Main = styled.main`
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 100%;
-    padding: 15px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;  
-`
-
-const Input = styled.input`
-    width: 303px;
-    height: 45px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 20px;
-
-    ::placeholder {
-        font-size: 20px;
-        color: #DBDBDB;
-    }
-`;
-
-const Article = styled.article`
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-`
