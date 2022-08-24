@@ -10,7 +10,7 @@ export default function TelaHome() {
 
     const [goals, setGoals]= useState([]);
     const [reload, setReload] = useState(true);
-    const [infosUser, setInfosUser] = useState({currentWeight: "", height: "", basalRate: ""});
+    const [infosUser, setInfosUser] = useState({currentWeight: 0, height: 0, basalRate: 0});
 
     const config = {
         headers: {Authorization: `Bearer ${token}`}
@@ -28,7 +28,7 @@ export default function TelaHome() {
         });
     }
 
-    function salvar() {
+    function atualizar() {
         api.put("user", infosUser, config)
         .then(response => {
             console.log(response.data);
@@ -70,12 +70,12 @@ export default function TelaHome() {
                             <Li>
                                 <H1>Taxa Metabolica Basal</H1>
                                 <Input type="number"
-                                    value={infosUser.basalRate}
+                                    value={infosUser.basalRate? infosUser.basalRate : ""}
                                     onChange={e => setInfosUser({...infosUser, basalRate: e.target.value})}
                                 />
                             </Li>
                             <Li>
-                                <Button onClick={salvar} updateButton={true}>Atualizar</Button>
+                                <Button onClick={atualizar} updateButton={true}>Atualizar</Button>
                             </Li>
                         </Ul> 
                     }   

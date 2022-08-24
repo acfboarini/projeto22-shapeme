@@ -9,7 +9,7 @@ export type CreateSessionData = Omit<Session, "id">;
 
 async function createUser(createUserData: CreateUserData) {
 
-    let { username, email, password, birthDate, image, currentWeight, height, basalRate } = createUserData;
+    let { username, email, password, birthDate, currentWeight, height, basalRate } = createUserData;
     const passwordHash = bcrypt.hashSync(password, 10);
     
     birthDate = dayjs(birthDate).format('YYYY-MM-DDTHH:mm:ss');
@@ -19,7 +19,6 @@ async function createUser(createUserData: CreateUserData) {
         email,
         password: passwordHash,
         birthDate,
-        image,
         currentWeight,
         height,
         basalRate
